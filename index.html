@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Kucharza</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff8f0;
+            color: #333;
+        }
+        #naglowek {
+            background: linear-gradient(90deg, #f7c948, #f57c00);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 32px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        sekcja {
+            padding: 50px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #zdjecieKucharza {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-right: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            border: 5px solid #f7c948;
+        }
+        .tekstSekcji {
+            max-width: 600px;
+        }
+        .sekcjaDania {
+            margin-top: 60px;
+            text-align: center;
+        }
+        .danie {
+            width: 200px;
+            margin: 20px;
+            display: inline-block;
+            cursor: default;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform .3s, box-shadow .3s;
+        }
+        .danie:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        #biografia {
+            display: none;
+            background: #fff3e0;
+            margin: 20px auto;
+            padding: 25px;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        #przyciskBiografia {
+            background: #f57c00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        #przyciskBiografia:hover {
+            background: #f9a825;
+        }
+        #powrotDoGory {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 18px;
+            background: #f57c00;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+        #powrotDoGory:hover {
+            background: #f9a825;
+        }
+        h2 {
+            color: #f57c00;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="naglowek">Portfolio – Mistrz Kuchni: Marco Rossi</div>
+
+<sekcja>
+    <img id="zdjecieKucharza" src="https://i.pinimg.com/736x/75/39/b0/7539b0295c4a5ae5ba3883e3f07e171c.jpg" alt="kucharz">
+    <div class="tekstSekcji">
+        <h2>Witaj w mojej kuchni!</h2>
+        <button id="przyciskBiografia">Pokaż / Ukryj biografię</button>
+        <div id="biografia">
+            Magda Gessler to znana polska restauratorka, kucharka i osobowość telewizyjna. Urodziła się 10 lipca 1953 roku w Warszawie. Jest najbardziej rozpoznawalna jako prowadząca program „Kuchenne rewolucje”, w którym pomaga ratować upadające restauracje. Znana jest z wyrazistego stylu bycia, kreatywności kulinarnej oraz promowania polskiej kuchni. Poza działalnością telewizyjną prowadzi także własne restauracje w Polsce.
+        </div>
+    </div>
+</sekcja>
+
+<sekcja class="sekcjaDania" style="flex-direction: column;">
+    <h2>Moje popisowe dania</h2>
+    <div>
+        <img class="danie" src="https://i.pinimg.com/736x/ca/0e/e8/ca0ee8678d5f8f9eebe1be12a73dcb4b.jpg" alt="danie 1">
+        <img class="danie" src="https://i.pinimg.com/736x/8e/ad/b1/8eadb173abf28c735c6e8b4b6a7d3e11.jpg" alt="danie 2">
+        <img class="danie" src="https://i.pinimg.com/1200x/16/4b/ad/164bad5d24bcbbe6232d57ab66d520d9.jpg" alt="danie 3">
+    </div>
+</sekcja>
+
+<div id="powrotDoGory">Do góry</div>
+
+<script>
+$(document).ready(function(){
+    // Animacja zdjęcia kucharza
+    $("#zdjecieKucharza").animate({opacity: 1, top: "-=30"}, 1000, function(){
+        $(this).animate({borderWidth: '10px'}, 500).animate({borderWidth: '5px'}, 500);
+    });
+
+    // Pokazywanie / ukrywanie biografii, przycisk działa normalnie, biografia pozostaje widoczna
+    $("#przyciskBiografia").on("click", function(){
+        if ($("#biografia").is(":visible")) {
+            $("#biografia").slideUp(500);
+        } else {
+            $("#biografia").slideDown(500);
+        }
+    });
+
+    // Przycisk powrotu do góry
+    $(window).on("scroll", function(){
+        if($(this).scrollTop() > 200){
+            $("#powrotDoGory").slideDown();
+        } else {
+            $("#powrotDoGory").slideUp();
+        }
+    });
+
+    $("#powrotDoGory").on("click", function(){
+        $("html, body").animate({scrollTop: 0}, 600);
+    });
+});
+</script>
+
+</body>
+</html>
