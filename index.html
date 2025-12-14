@@ -1,166 +1,339 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Kucharza</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #fff8f0;
-            color: #333;
-        }
-        #naglowek {
-            background: linear-gradient(90deg, #f7c948, #f57c00);
-            color: white;
-            padding: 25px;
-            text-align: center;
-            font-size: 32px;
-            letter-spacing: 2px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        sekcja {
-            padding: 50px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        #zdjecieKucharza {
-            width: 250px;
-            height: 250px;
-            border-radius: 20px;
-            object-fit: cover;
-            margin-right: 40px;
-            opacity: 0;
-            transform: translateY(30px);
-            border: 5px solid #f7c948;
-        }
-        .tekstSekcji {
-            max-width: 600px;
-        }
-        .sekcjaDania {
-            margin-top: 60px;
-            text-align: center;
-        }
-        .danie {
-            width: 200px;
-            margin: 20px;
-            display: inline-block;
-            cursor: default;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform .3s, box-shadow .3s;
-        }
-        .danie:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-        }
-        #biografia {
-            display: none;
-            background: #fff3e0;
-            margin: 20px auto;
-            padding: 25px;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            font-size: 18px;
-            line-height: 1.6;
-        }
-        #przyciskBiografia {
-            background: #f57c00;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-        #przyciskBiografia:hover {
-            background: #f9a825;
-        }
-        #powrotDoGory {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 12px 18px;
-            background: #f57c00;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: background 0.3s;
-        }
-        #powrotDoGory:hover {
-            background: #f9a825;
-        }
-        h2 {
-            color: #f57c00;
-            margin-bottom: 40px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Grecja – One Page</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+      background-color: #d3d3d3;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #0077b6;
+      padding: 15px 10%;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity .3s;
+    }
+
+    nav a:hover { opacity: 0.7; }
+
+    header {
+      height: 90vh;
+      background: url('https://i.pinimg.com/736x/2e/03/2a/2e032ab280cc8ce45ac11738437dd2b4.jpg') center/cover;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      display: none;
+    }
+
+    section {
+      padding: 60px 10%;
+      min-height: 100vh;
+      opacity: 0;
+    }
+
+    section:nth-child(even) {
+      background: #f4f9fc;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      color: #0077b6;
+    }
+
+    .about-box {
+      max-width: 800px;
+      font-size: 1.1rem;
+    }
+
+    #showAttractions {
+      padding: 12px 25px;
+      background: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+
+    .attractions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .attractions div {
+      display: none;
+      background: #d3d3d3;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.1);
+      font-size: 1.1rem;
+      text-align: center;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform .3s;
+    }
+
+    .gallery img:hover { transform: scale(1.05); }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #lightbox img {
+      max-width: 85%;
+      max-height: 85vh;
+      border-radius: 20px;
+    }
+
+    form {
+      max-width: 500px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    form button {
+      background: #0077b6;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #formMsg { margin-top: 10px; color: green; }
+
+    footer {
+      background: #023047;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #0077b6;
+      color: white;
+      padding: 30px 30px;
+      border-radius: 100%;
+      cursor: pointer;
+      display: none;
+      font-size: 1.2rem;
+      z-index: 1001;
+    }
+
+    @media (max-width: 1024px) {
+    header h1 { font-size: 3.5rem; }
+    section { padding: 60px 8%; }
+    nav { gap: 20px; padding: 15px 5%; }
+  }
+
+  @media (max-width: 768px) {
+    header h1 { font-size: 2.8rem; }
+    header p { font-size: 1.1rem; }
+    section { padding: 50px 7%; }
+    .gallery img { height: 180px; }
+    .attractions div { padding: 20px; font-size: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    nav { flex-direction: column; gap: 10px; }
+    header { padding: 0 10px; }
+    header h1 { font-size: 2.2rem; }
+    header p { font-size: 1rem; }
+    .gallery img { height: 150px; }
+    #showAttractions { padding: 10px 20px; font-size: 0.9rem; }
+  }
+  </style>
 </head>
 <body>
 
-<div id="naglowek">Portfolio – Mistrzyni Kuchni: Magda Gessler</div>
+<nav>
+  <a href="#home">Start</a>
+  <a href="#about">O Grecji</a>
+  <a href="#attractions">Atrakcje</a>
+  <a href="#gallery">Galeria</a>
+  <a href="#contact">Kontakt</a>
+</nav>
 
-<sekcja>
-    <img id="zdjecieKucharza" src="https://i.pinimg.com/736x/75/39/b0/7539b0295c4a5ae5ba3883e3f07e171c.jpg" alt="kucharz">
-    <div class="tekstSekcji">
-        <h2>Witaj w mojej kuchni!</h2>
-        <button id="przyciskBiografia">Pokaż / Ukryj biografię</button>
-        <div id="biografia">
-            Magda Gessler to znana polska restauratorka, kucharka i osobowość telewizyjna. Urodziła się 10 lipca 1953 roku w Warszawie. Jest najbardziej rozpoznawalna jako prowadząca program „Kuchenne rewolucje”, w którym pomaga ratować upadające restauracje. Znana jest z wyrazistego stylu bycia, kreatywności kulinarnej oraz promowania polskiej kuchni. Poza działalnością telewizyjną prowadzi także własne restauracje w Polsce.
-        </div>
-    </div>
-</sekcja>
+<header id="home">
+  <h1>Grecja</h1>
+  <p>Kolebka cywilizacji i raj dla turystów</p>
+</header>
 
-<sekcja class="sekcjaDania" style="flex-direction: column;">
-    <h2>Galeria Magdy</h2>
-    <div>
-        <img class="danie" src="https://i.pinimg.com/736x/ca/0e/e8/ca0ee8678d5f8f9eebe1be12a73dcb4b.jpg" alt="danie 1">
-        <img class="danie" src="https://i.pinimg.com/736x/8e/ad/b1/8eadb173abf28c735c6e8b4b6a7d3e11.jpg" alt="danie 2">
-        <img class="danie" src="https://i.pinimg.com/1200x/16/4b/ad/164bad5d24bcbbe6232d57ab66d520d9.jpg" alt="danie 3">
-    </div>
-</sekcja>
+<section id="about">
+  <h2>O Grecji</h2>
+  <div class="about-box">
+    Grecja to kraj pełen słońca, turkusowego morza i starożytnych zabytków. Znana jest z mitologii, wysp oraz kuchni śródziemnomorskiej.
+  </div>
+</section>
 
-<div id="powrotDoGory">Do góry</div>
+<section id="attractions">
+  <h2>Atrakcje turystyczne</h2>
+  <button id="showAttractions">Pokaż / Ukryj atrakcje</button>
+  <div class="attractions">
+    <div>🏛 Akropol w Atenach</div>
+    <div>🏖 Santorini</div>
+    <div>🏝 Kreta</div>
+    <div>⛪ Meteory</div>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2>Galeria</h2>
+  <div class="gallery">
+    <img src="https://i.pinimg.com/1200x/ad/a0/6f/ada06f3915a2e7d0d8d3206d1446afc9.jpg">
+    <img src="https://i.pinimg.com/736x/3c/c9/23/3cc9233ed83000bd5756390b318d7264.jpg">
+    <img src="https://i.pinimg.com/736x/21/83/ab/2183ab07ff2e0e561e0e0738705d4343.jpg">
+  </div>
+</section>
+
+<div id="lightbox"><img src=""></div>
+
+<section id="contact">
+  <h2>Kontakt</h2>
+  <form id="contactForm">
+    <input type="text" placeholder="Imię" required>
+    <input type="email" placeholder="Email" required>
+    <textarea placeholder="Wiadomość"></textarea>
+    <button type="submit">Wyślij</button>
+  </form>
+  <div id="formMsg"></div>
+</section>
+
+<footer>
+Grecja
+</footer>
+
+<div id="backToTop">↑</div>
 
 <script>
-$(document).ready(function(){
-    // Animacja zdjęcia magda
-    $("#zdjecieKucharza").animate({opacity: 1, top: "-=30"}, 1000, function(){
-        $(this).animate({borderWidth: '10px'}, 500).animate({borderWidth: '5px'}, 500);
-    });
+  $(document).ready(function() {
 
-    // Pokazywanie / ukrywanie biografii
-    $("#przyciskBiografia").on("click", function(){
-        if ($("#biografia").is(":visible")) {
-            $("#biografia").slideUp(500);
-        } else {
-            $("#biografia").slideDown(500);
+    $('header h1').fadeIn(1500);
+    $('header p').delay(500).fadeIn(1500);
+
+
+
+    function revealSections() {
+      $('section').each(function() {
+        var top = $(this).offset().top - $(window).scrollTop();
+        if (top < $(window).height() - 100) {
+          $(this).animate({opacity: 1}, 1000);
         }
+      });
+    }
+
+
+    revealSections();
+    $(window).on('scroll', revealSections);
+
+
+    $('nav a').on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 80 }, 800);
     });
 
-    // Przycisk powrotu do góry
-    $(window).on("scroll", function(){
-        if($(this).scrollTop() > 200){
-            $("#powrotDoGory").slideDown();
-        } else {
-            $("#powrotDoGory").slideUp();
-        }
+
+
+    $('#showAttractions').on('click', function() {
+      $('.attractions div').slideToggle(500);
     });
 
-    $("#powrotDoGory").on("click", function(){
-        $("html, body").animate({scrollTop: 0}, 600);
+
+
+    $('.gallery img').on('click', function() {
+      $('#lightbox img').attr('src', $(this).attr('src'));
+      $('#lightbox').fadeIn();
     });
-});
+
+    $('#lightbox').on('click', function() { $(this).fadeOut(); });
+
+
+
+    $('#contactForm').on('submit', function(e) {
+      e.preventDefault();
+      $('#formMsg').text('Wiadomość została wysłana!').hide().fadeIn();
+      this.reset();
+    });
+
+
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 300) { $('#backToTop').fadeIn(); }
+      else { $('#backToTop').fadeOut(); }
+    });
+
+
+    $('#backToTop').click(function() {
+      $('html, body').animate({scrollTop: 0}, 800);
+    });
+  });
 </script>
 
 </body>
